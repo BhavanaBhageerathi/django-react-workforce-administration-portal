@@ -1,18 +1,19 @@
 from django.db import models
 from django.contrib.auth.models import User#importing built in user class
-from django.db.models.signals import post_save
-from django.dispatch import receiver
-from rest_framework.authtoken.models import Token
-from django.conf import settings
+#from django.db.models.signals import post_save
+#from django.dispatch import receiver
+#from rest_framework.authtoken.models import Token
+#from django.conf import settings
 
 #to automatically generate token even if the user is created via admin interface
 #when we receive the post_save signal of USER model,then we can generate token for that user
-@receiver(post_save,sender=settings.AUTH_USER_MODEL)
+'''@receiver(post_save,sender=settings.AUTH_USER_MODEL)
 def create_auth_token(sender,instance=None,created=False,**kwargs):
     if created:
         Token.objects.create(user=instance)
+        '''
 
-# Create your models here.
+# Create your models here#.
 
 #create model for department by inheriting Models class inside models module
 class Department(models.Model):

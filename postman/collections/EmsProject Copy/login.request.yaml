@@ -1,0 +1,27 @@
+$kind: http-request
+url: http://127.0.0.1:8000/api/login/
+method: POST
+headers:
+  - key: ""
+    value: ""
+    disabled: true
+body:
+  type: json
+  content: "{\r
+
+    \    \"username\":\"testuser123456\",\r
+
+    \    \"password\":\"admin123\"\r
+
+    }"
+auth:
+  type: jwt
+  credentials:
+    algorithm: HS256
+    isSecretBase64Encoded: false
+    addTokenTo: header
+    payload: "{}"
+    queryParamKey: token
+    header: "{}"
+    headerPrefix: Bearer
+order: 5000

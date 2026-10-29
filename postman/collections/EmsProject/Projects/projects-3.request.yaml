@@ -1,0 +1,5 @@
+$kind: http-request
+name: projects
+url: http://127.0.0.1:8000/api/projects/7/
+method: DELETE
+order: 4000

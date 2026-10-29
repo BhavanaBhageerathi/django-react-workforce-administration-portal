@@ -112,12 +112,65 @@ class UserdetailsSerializer(serializers.ModelSerializer):
     class Meta:
         model=UserDetails
         fields='__all__'
-
+'''
 class ProjectSerializer(serializers.ModelSerializer):
     class Meta:
         model=Project
         fields='__all__'
+        '''
 
+#create a small serializer just to provide employee details (emp id, emp name) to the project serializer
+class EmployeeProjectSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=Employee
+        fields=('EmployeeId','EmployeeName') #we need only selected fields
+class ProjectSerializer(serializers.ModelSerializer):
+    #create an instace of the EmployeeProjectSerializer to add it as a read-only nestedview
+    #so that when creating project, pass only empid not emp name
+    employee_details = EmployeeProjectSerializer(
+        source="employees",   #got it from the project model
+        many= True, #since its a many to many relation
+        read_only=True
+    )
 
-
+    class Meta:
+        model=Project
+        # fields='_all_' # will work,but order will different
+        #      {
+        #     "id": 1,
+        #     "employee_details": [
+        #         {
+        #             "EmployeeId": 1,
+        #             "EmployeeName": "TestEmployee1"
+        #         },
+        #         {
+        #             "EmployeeId": 2,
+        #             "EmployeeName": "TestEmployee2"
+        #         }
+        #     ],
+        #     "name": "clinic management",
+        #     "employees": [
+        #         1,
+        #         2
+        #     ]
+        # }
+        fields=('id','name','employees','employee_details')  #'id','name','employees' already there now add employee_details
+        #     {
+        #     "id": 1,
+        #     "name": "clinic management",
+        #     "employees": [
+        #         1,
+        #         2
+        #     ],
+        #     "employee_details": [
+        #         {
+        #             "EmployeeId": 1,
+        #             "EmployeeName": "TestEmployee1"
+        #         },
+        #         {
+        #             "EmployeeId": 2,
+        #             "EmployeeName": "TestEmployee2"
+        #         }
+        #     ]
+        # }
 

@@ -6,7 +6,8 @@ from rest_framework import viewsets,filters,permissions,status
 
 # @becoz we r going to create views based on viewsets
 from rest_framework.views import APIView
-from rest_framework.authtoken.models import Token
+#from rest_framework.authtoken.models import Token
+from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.response import Response
 from django.contrib.auth import authenticate
 
@@ -30,12 +31,14 @@ class SignupAPIView(APIView):
             # in that case save the user using ther serializer
             user = serializer.save()
             # and get the created token
-            token,created=Token.objects.get_or_create(user=user)
+            #token,created=Token.objects.get_or_create(user=user)
+            refresh=RefreshToken.for_user(user)
             #design the json response to be send back on successfull user creation
             return Response({
                 "user_id":user.id,
                 "username":user.username,
-                "token":token.key,
+                "access":str(refresh.access_token),
+                "refresh":str(refresh),
                 "role":user.groups.all()[0].id if user.groups.exists() else None
                 },status.HTTP_201_CREATED)
 
@@ -60,12 +63,15 @@ class LoginAPIView(APIView):
             #if successfully validated, authenticate fn will return a valid user obj else none
             if user is not None:
                 #get the token and send it alone with json resonse
-                token = Token.objects.get(user=user)
+                #token = Token.objects.get(user=user)
+                refresh=RefreshToken.for_user(user)
                 response = {
                     "status":status.HTTP_200_OK,
                     "message":"Success",
                     "username":user.username,
-                    "token":token.key,
+                    #"token":token.key,
+                    "access":str(refresh.access_token),
+                    "refresh":str(refresh),
                     "role":user.groups.all()[0].id if user.groups.exists() else None
                 }
                 return Response(response,status=status.HTTP_200_OK)
@@ -94,7 +100,7 @@ class DepartmentViewSet(viewsets.ModelViewSet):
     queryset=Department.objects.all()#variable name queryset exactly like this
     serializer_class=DepartmentSerializer#seralizer variable also.
     #to bypass the permission for login 
-    permission_classes = []
+    #permission_classes = []
     # permission_classes = [permissions.IsAuthenticated] #again giving authentication
 
 class EmployeeViewSet(viewsets.ModelViewSet):
@@ -104,7 +110,7 @@ class EmployeeViewSet(viewsets.ModelViewSet):
     #add search functionality for employee
     filter_backends=[filters.SearchFilter]
     search_fields=['EmployeeName','Designation'] #ndhoke vech search chyan pattanam#ithoke use chyth ahn nammal search chyane
-    permission_classes = []
+    # permission_classes = []
 
 
 
@@ -112,15 +118,15 @@ class EmployeeViewSet(viewsets.ModelViewSet):
 class UserDetailsViewSet(viewsets.ModelViewSet):
     queryset=UserDetails.objects.all()
     serializer_class=UserdetailsSerializer
-    permission_classes = []
+    # permission_classes = []
 
 class UserViewSet(viewsets.ModelViewSet):
     queryset=User.objects.all()
     serializer_class=UserSerializer
-    permission_classes = []
+    # permission_classes = []
 
 class ProjectViewSet(viewsets.ModelViewSet):
     queryset=Project.objects.all()
     serializer_class=ProjectSerializer
-    permission_classes = []
+    # permission_classes = []
 

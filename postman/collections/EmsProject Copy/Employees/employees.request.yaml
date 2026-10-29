@@ -1,0 +1,14 @@
+$kind: http-request
+url: http://127.0.0.1:8000/api/employees
+method: GET
+headers:
+  - key: Authorization
+    value: token a114b289426098b18c45895da8a1810a55c84c64
+    disabled: true
+body:
+  type: text
+  content: ""
+auth:
+  type: noauth
+settings: {}
+order: 1000

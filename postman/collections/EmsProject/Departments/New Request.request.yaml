@@ -1,0 +1,10 @@
+$kind: http-request
+url: http://127.0.0.1:8000/api/departments/?
+method: GET
+queryParams:
+  "": null
+auth:
+  type: bearer
+  credentials:
+    token: "{{auth_secret_0mbx}}"
+order: 1000

@@ -1,0 +1,18 @@
+$kind: http-request
+name: projects
+url: http://127.0.0.1:8000/api/projects/7/
+method: PUT
+body:
+  type: json
+  content: "  {\r
+
+    \        \"name\": \"Store management\",\r
+
+    \        \"employees\": [\r
+
+    \            2\r
+
+    \        ]\r
+
+    \  }"
+order: 3000

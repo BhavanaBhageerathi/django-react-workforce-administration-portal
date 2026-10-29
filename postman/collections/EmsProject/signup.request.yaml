@@ -1,0 +1,15 @@
+$kind: http-request
+url: http://127.0.0.1:8000/api/signup/
+method: POST
+body:
+  type: json
+  content: "{\r
+
+    \    \"username\":\"testuser123456\",\r
+
+    \    \"password\":\"admin123\",\r
+
+    \    \"group_name\":1\r
+
+    }"
+order: 6000

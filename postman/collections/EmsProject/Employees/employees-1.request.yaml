@@ -1,0 +1,22 @@
+$kind: http-request
+name: employees
+url: http://127.0.0.1:8000/api/employees/5/
+method: PUT
+body:
+  type: json
+  content: "{\r
+
+    \    \"EmployeeName\": \"TestEmployee13\",\r
+
+    \    \"Designation\": \"Manager in charge\",\r
+
+    \    \"DateOfJoining\": \"2026-07-10\",\r
+
+    \    \"Contact\": \"9952263566\",\r
+
+    \    \"IsActive\": true,\r
+
+    \    \"DepartmentId\": 1\r
+
+    }"
+order: 2000

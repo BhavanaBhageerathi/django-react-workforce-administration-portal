@@ -4,6 +4,7 @@ from rest_framework.routers import DefaultRouter
 #view that we created
 from . import views #or from .views  ......
 from django.urls import path #import path
+from rest_framework_simplejwt.views import TokenRefreshView
 
 #create a router instance
 router=DefaultRouter()
@@ -22,8 +23,11 @@ router.register(r'projects',views.ProjectViewSet)
 #and append it to the existing url pattern list
 urlpatterns = [
     path('signup/',views.SignupAPIView.as_view(), name = "user-signup"), #signup/ ,/ is compulsory
-    path('login/',views.LoginAPIView.as_view(), name = "user-login")
+    path('login/',views.LoginAPIView.as_view(), name = "user-login"),
+    path('token/refresh/',TokenRefreshView.as_view(),name='token_refresh')
 ]
+#access token manually refresh chyan we need one more url-functionalit lib ond
+
 
 #convert the registered urls into url patterns list
 urlpatterns = router.urls + urlpatterns
